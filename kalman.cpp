@@ -16,14 +16,15 @@ using std::sqrt;
 #define PII 3.1415926
 
 // Start Likelihood -------------
-double lik(vec theta, vec y_, arma::mat X_) {
+double lik(vec theta, vec y_, vec X_) {
   
-  arma::colvec y = y_;
-  arma::colvec intercept;
+  arma::vec y = y_;
+  arma::vec intercept;
   intercept.ones(y.n_elem);
   
-  //  arma::mat X = X_;
-  arma::mat X(intercept, X_);
+  //arma::mat X = X_;
+  //arma::mat X(intercept, X_);
+  arma::mat X = arma::mat(y.n_elem, 2, arma::fill::randu);
 
   double alpha0 = theta[0];
   double alpha1 = theta[1];
@@ -127,7 +128,7 @@ int main(int argc, char** argv)
     colvec market;
     market.load("./market.csv", csv_ascii);
 
-    vec theta(3, fill::randu)
+    vec theta(3, fill::randu);
 
     // colvec y_ = stock;
     // colvec X_ = market;
