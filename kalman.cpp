@@ -15,22 +15,15 @@ using std::sqrt;
 
 #define PII 3.1415926
 
-
-int main(int argc, char** argv)
-  {
-    //import market and stock--------
-    mat stock;
-    stock.load("./stock.csv", csv_ascii);
-
-    mat market;
-    market.load("./market.csv", csv_ascii);
-
-    // Start Likelihood -------------
-double lik(NumericVector theta, NumericVector y_, arma::mat X_) {
-  //arma::vec lik(NumericVector theta, NumericVector y_, arma::mat X_) {
+// Start Likelihood -------------
+double lik(vec theta, vec y_, arma::mat X_) {
   
   arma::colvec y = y_;
-  arma::mat X = X_;
+  arma::colvec intercept;
+  intercept.ones(y.n_elem);
+  
+  //  arma::mat X = X_;
+  arma::mat X(intercept, X_);
 
   double alpha0 = theta[0];
   double alpha1 = theta[1];
@@ -123,8 +116,26 @@ double lik(NumericVector theta, NumericVector y_, arma::mat X_) {
   return -1 * logl;
 
     }
-  
 
+
+int main(int argc, char** argv)
+  {
+    //import market and stock--------
+    colvec stock;
+    stock.load("./stock.csv", csv_ascii);
+
+    colvec market;
+    market.load("./market.csv", csv_ascii);
+
+    vec theta(3, fill::randu)
+
+    // colvec y_ = stock;
+    // colvec X_ = market;
+    // colvec theta(3, fill::randu);
+
+ //double lik_test = lik(theta, stock, market);
+ 
+ cout << "neg log lik = " << lik(theta, stock, market) << endl;
 
     //can use function minimization from the GSL here: https://www.gnu.org/software/gsl/doc/html/multimin.html#
 
