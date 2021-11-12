@@ -19,13 +19,9 @@ using std::sqrt;
 double lik(vec theta, vec y_, vec X_) {
   
   arma::vec y = y_;
-  arma::vec intercept;
-  intercept.ones(y.n_elem);
-  
-  //arma::mat X = X_;
-  //arma::mat X(intercept, X_);
-  arma::mat X = arma::mat(y.n_elem, 2, arma::fill::randu);
-
+  mat X(y.n_elem, 1, fill::ones);
+  X.insert_cols(1, X_);
+ 
   double alpha0 = theta[0];
   double alpha1 = theta[1];
   double alpha2 = theta[2];
