@@ -135,5 +135,6 @@ int main(int argc, char** argv)
  cout << "neg log lik = " << lik(theta, stock, market) << endl;
 
     //can use function minimization from the GSL here: https://www.gnu.org/software/gsl/doc/html/multimin.html#
+    //to implement it this answer may be useful: https://stackoverflow.com/questions/62264648/using-gsl-minimize-in-c
 
   }
