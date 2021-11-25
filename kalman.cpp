@@ -1,4 +1,5 @@
 #include <iostream>
+#include <nlopt.h>
 
 #include "armadillo"
 
@@ -16,15 +17,19 @@ using std::sqrt;
 #define PII 3.1415926
 
 // Start Likelihood -------------
-double lik(vec theta, vec y_, vec X_) {
+double lik(const double *theta0 ,const double *theta1, const double *theta2, vec y_, vec X_) { //removed vec theta
   
   arma::vec y = y_;
   mat X(y.n_elem, 1, fill::ones);
   X.insert_cols(1, X_);
  
-  double alpha0 = theta[0];
-  double alpha1 = theta[1];
-  double alpha2 = theta[2];
+  double alpha0 = *theta0;
+  double alpha1 = *theta1;
+  double alpha2 = *theta2;
+
+  // double alpha0 = theta[0];
+  // double alpha1 = theta[1];
+  // double alpha2 = theta[2];
 
   int num_observations = y.n_elem;
   int num_variables = X.n_cols;
@@ -125,6 +130,9 @@ int main(int argc, char** argv)
     market.load("./market.csv", csv_ascii);
 
     vec theta(3, fill::randu);
+    double theta0 = theta[0];
+    double theta1 = theta[1];
+    double theta2 = theta[2];
 
     // colvec y_ = stock;
     // colvec X_ = market;
@@ -132,9 +140,10 @@ int main(int argc, char** argv)
 
  //double lik_test = lik(theta, stock, market);
  
- cout << "neg log lik = " << lik(theta, stock, market) << endl;
+    cout << "neg log lik = " << lik(&theta0, &theta1, &theta2, stock, market) << endl;
 
     //can use function minimization from the GSL here: https://www.gnu.org/software/gsl/doc/html/multimin.html#
     //to implement it this answer may be useful: https://stackoverflow.com/questions/62264648/using-gsl-minimize-in-c
+    //BETTER: Use NLOpt
 
   }
