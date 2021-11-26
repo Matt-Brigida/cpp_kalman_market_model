@@ -18,11 +18,18 @@ using std::sqrt;
 
 // Start Likelihood -------------
 // double lik(const double *theta0 ,const double *theta1, const double *theta2, vec y_, vec X_) { //removed vec theta
-double lik(double theta[3], vec y_, vec X_) { //removed vec theta
+double lik(unsigned n, const double *theta, double *grad, void *my_func_data) { //removed vec theta
+
+  colvec stock;
+  stock.load("./stock.csv", csv_ascii);
+
+  colvec market;
+  market.load("./market.csv", csv_ascii);
+
   
-  arma::vec y = y_;
+  arma::vec y = stock;
   mat X(y.n_elem, 1, fill::ones);
-  X.insert_cols(1, X_);
+  X.insert_cols(1, market);
  
   // double alpha0 = *theta0;
   // double alpha1 = *theta1;
@@ -128,11 +135,11 @@ double lik(double theta[3], vec y_, vec X_) { //removed vec theta
 int main(int argc, char** argv)
   {
     //import market and stock--------
-    colvec stock;
-    stock.load("./stock.csv", csv_ascii);
+    // colvec stock;
+    // stock.load("./stock.csv", csv_ascii);
 
-    colvec market;
-    market.load("./market.csv", csv_ascii);
+    // colvec market;
+    // market.load("./market.csv", csv_ascii);
 
     //    vec theta(3, fill::randu);
     // double theta0 = theta[0];
@@ -156,15 +163,20 @@ int main(int argc, char** argv)
 
      //minimization
 
+    // double lb[3] = {-HUGE_VAL, -HUGE_VAL, -HUGE_VAL};
      nlopt_opt opt;
      opt = nlopt_create(NLOPT_LD_MMA, 3); /* algorithm and dimensionality */
+     // nlopt_set_lower_bounds(opt, lb);
+
+     nlopt_set_min_objective(opt, lik, NULL);
+
+     nlopt_set_xtol_rel(opt, 1e-4);
 
      double minf; /* `*`the` `minimum` `objective` `value,` `upon` `return`*` */
      if (nlopt_optimize(opt, theta, &minf) < 0) {
-    printf("nlopt failed!\n");
+       printf("nlopt failed!\n");
+     } else {
+       printf("found minimum at f(%g,%g,%g) = %0.10g\n", theta[0], theta[1],
+              theta[2], minf);
+     }
 }
-else {
-  printf("found minimum at f(%g,%g,%g) = %0.10g\n", theta[0], theta[1], theta[2], minf);
-  }
-
-  }
