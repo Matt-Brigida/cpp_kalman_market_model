@@ -18,7 +18,7 @@ using std::sqrt;
 
 // Start Likelihood -------------
 // double lik(const double *theta0 ,const double *theta1, const double *theta2, vec y_, vec X_) { //removed vec theta
-double lik(unsigned n, const double theta, double *grad, void *my_func_data) { //removed vec theta
+double lik(unsigned n, const double* theta, double *grad, void *my_func_data) { //removed vec theta
 
   colvec stock;
   stock.load("./stock.csv", csv_ascii);
@@ -165,7 +165,8 @@ int main()
 
     // double lb[3] = {-HUGE_VAL, -HUGE_VAL, -HUGE_VAL};
      nlopt_opt opt;
-     opt = nlopt_create(NLOPT_LD_MMA, 3); /* algorithm and dimensionality */
+     opt = nlopt_create(NLOPT_LN_NELDERMEAD, 3);	 /* algorithm and dimensionality */
+     // opt = nlopt_create(NLOPT_LD_MMA, 3);
      // nlopt_set_lower_bounds(opt, lb);
 
      nlopt_set_min_objective(opt, lik, NULL);
