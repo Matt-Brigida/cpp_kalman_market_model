@@ -18,7 +18,7 @@ using std::sqrt;
 
 // Start Likelihood -------------
 // double lik(const double *theta0 ,const double *theta1, const double *theta2, vec y_, vec X_) { //removed vec theta
-double lik(unsigned n, const double *theta, double *grad, void *my_func_data) { //removed vec theta
+double lik(unsigned n, const double theta, double *grad, void *my_func_data) { //removed vec theta
 
   colvec stock;
   stock.load("./stock.csv", csv_ascii);
@@ -132,7 +132,7 @@ double lik(unsigned n, const double *theta, double *grad, void *my_func_data) { 
     }
 
 
-int main(int argc, char** argv)
+int main()
   {
     //import market and stock--------
     // colvec stock;
