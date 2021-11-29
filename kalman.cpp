@@ -17,8 +17,7 @@ using std::sqrt;
 #define PII 3.1415926
 
 // Start Likelihood -------------
-// double lik(const double *theta0 ,const double *theta1, const double *theta2, vec y_, vec X_) { //removed vec theta
-double lik(unsigned n, const double* theta, double *grad, void *my_func_data) { //removed vec theta
+double lik(unsigned n, const double* theta, double *grad, void *my_func_data) {
 
   colvec stock;
   stock.load("./stock.csv", csv_ascii);
@@ -31,17 +30,9 @@ double lik(unsigned n, const double* theta, double *grad, void *my_func_data) { 
   mat X(y.n_elem, 1, fill::ones);
   X.insert_cols(1, market);
  
-  // double alpha0 = *theta0;
-  // double alpha1 = *theta1;
-  // double alpha2 = *theta2;
-
   double alpha0 = theta[0];
   double alpha1 = theta[1];
   double alpha2 = theta[2];
-  // double* alpha0 = theta[0];
-  // double* alpha1 = theta[1];
-  // double* alpha2 = theta[2];
-
 
   int num_observations = y.n_elem;
   int num_variables = X.n_cols;
@@ -141,21 +132,12 @@ int main()
     // colvec market;
     // market.load("./market.csv", csv_ascii);
 
-    //    vec theta(3, fill::randu);
-    // double theta0 = theta[0];
-    // double theta1 = theta[1];
-    // double theta2 = theta[2];
-
-    double theta[3] = {0.1, 0.1, 0.1};
-
     // colvec y_ = stock;
     // colvec X_ = market;
-    // colvec theta(3, fill::randu);
+    
+    double theta[3] = {0.1, 0.1, 0.1};
 
- //double lik_test = lik(theta, stock, market);
- 
     //     cout << "neg log lik = " << lik(&theta0, &theta1, &theta2, stock, market) << endl;
-    //    cout << "neg log lik = " << lik(&theta, stock, market) << endl;
 
     //can use function minimization from the GSL here: https://www.gnu.org/software/gsl/doc/html/multimin.html#
     //to implement it this answer may be useful: https://stackoverflow.com/questions/62264648/using-gsl-minimize-in-c
