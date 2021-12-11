@@ -1,7 +1,22 @@
+#include <iostream>
+#include "kalman.h"
+
+#include "armadillo"
+
+using namespace arma;
+using namespace std;
+
+using arma::colvec;
+using arma::log;
+using arma::normcdf;
+using std::exp;
+using std::log;
+using std::pow;
+using std::sqrt;
 
 #define PII 3.1415926
 
-int forward_pass()
+int forward_pass(double theta[3])
 {
 
   colvec stock;
@@ -95,7 +110,7 @@ int forward_pass()
 
   double logl = -0.5 * arma::accu(log(abs(f))) - 0.5 * arma::accu(eta % eta * (1 / f).t());
 
-betatt.print()
+  betatt.print();
 
   return 0;
 

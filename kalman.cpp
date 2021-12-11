@@ -1,5 +1,6 @@
 #include <iostream>
 #include <nlopt.h>
+#include "kalman.h"
 
 #include "armadillo"
 
@@ -162,4 +163,5 @@ int main()
        printf("found minimum at f(%g,%g,%g) = %0.10g\n", theta[0], theta[1],
               theta[2], minf);
      }
+  forward_pass(theta);
 }
