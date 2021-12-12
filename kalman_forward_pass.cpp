@@ -110,7 +110,7 @@ int forward_pass(double theta[3])
 
   double logl = -0.5 * arma::accu(log(abs(f))) - 0.5 * arma::accu(eta % eta * (1 / f).t());
 
-  betatt.print();
+  betatt.col(1).print();
 
   return 0;
 
