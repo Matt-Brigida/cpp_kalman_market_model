@@ -165,3 +165,10 @@ int main()
      }
   forward_pass(theta);
 }
+
+
+/*
+Compile with:
+clang++ -Wall kalman.cpp kalman_forward_pass.cpp -o kalman -I/home/matt/include
+-lopenblas -llapack -lm -lnlopt
+*/

@@ -106,11 +106,19 @@ int forward_pass(double theta[3])
   }
 
   //the first element of f is 0, so change to 1---log(1) is 0 and 1/1 is 1, so OK
-  f.at(0) = 1;
+  //f.at(0) = 1;
 
-  double logl = -0.5 * arma::accu(log(abs(f))) - 0.5 * arma::accu(eta % eta * (1 / f).t());
+  //  double logl = -0.5 * arma::accu(log(abs(f))) - 0.5 * arma::accu(eta % eta * (1 / f).t());
 
   betatt.col(1).print();
+
+  //forecast next stock return value and standard deviation-----------
+
+  //arma::vec prediction =
+
+  std::cout << "\nPrediction:\n" << X.row(num_observations - 1) * betatt.row(num_observations - 1).t() << std::endl;
+
+  std::cout << "\nStandard deviation of previous prediction error:\n" << sqrt(f.at(num_observations - 1)) << std::endl;
 
   return 0;
 
