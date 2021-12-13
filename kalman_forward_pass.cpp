@@ -9,6 +9,7 @@ using namespace std;
 using arma::colvec;
 using arma::log;
 using arma::normcdf;
+using arma::mean;
 using std::exp;
 using std::log;
 using std::pow;
@@ -112,9 +113,9 @@ int forward_pass(double theta[3])
 
   betatt.col(1).print();
 
-  //forecast next stock return value and standard deviation-----------
+  std::cout << "\nAverage Beta:\n" << arma::mean(betatt.col(1)) << std::endl;
 
-  //arma::vec prediction =
+  //forecast next stock return value and standard deviation-----------
 
   std::cout << "\nPrediction:\n" << X.row(num_observations - 1) * betatt.row(num_observations - 1).t() << std::endl;
 
