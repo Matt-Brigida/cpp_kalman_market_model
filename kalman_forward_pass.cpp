@@ -113,7 +113,7 @@ int forward_pass(double theta[3])
 
   betatt.col(1).print();
 
-  std::cout << "\nAverage Beta:\n" << arma::mean(betatt.col(1)) << std::endl;
+  std::cout << "\nAverage Beta:\n" << arma::mean(betatt.tail_rows(10).col(1)) << std::endl;
 
   //forecast next stock return value and standard deviation-----------
 
